@@ -8,6 +8,6 @@
     <fragment
         android:id="@+id/newsListFragment"
         android:name="com.ottarson.hackerreader.ui.newslist.NewsListFragment"
-        android:label="news_list_fragment"
+        android:label="@string/app_name"
         tools:layout="@layout/fragment_news_list" />
 </navigation>

@@ -16,6 +16,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "API_URL", "\"https://hacker-news.firebaseio.com/v0/\"")
     }
     buildTypes {
         release {
@@ -28,6 +29,8 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.browser:browser:1.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
 
     def appCompatVersion = "1.1.0"
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
@@ -59,10 +62,21 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
 
     // RxJava
-    implementation "io.reactivex.rxjava3:rxjava:3.0.0-RC6"
+    def rxJavaVersion = "2.1.1"
+    implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$rxJavaVersion"
 
     // Retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.6.2'
+    def retrofitVersion = "2.6.2"
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.2'
+
+
+    // Gson parsing
+    def gsonVersion = "2.8.6"
+    implementation "com.google.code.gson:gson:$gsonVersion"
 
     // Testing
     testImplementation 'junit:junit:4.12'
