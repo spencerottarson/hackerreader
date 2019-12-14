@@ -5,7 +5,11 @@ import android.content.Context
 import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
-import androidx.browser.customtabs.*
+import androidx.browser.customtabs.CustomTabsClient
+import androidx.browser.customtabs.CustomTabsIntent
+import androidx.browser.customtabs.CustomTabsService
+import androidx.browser.customtabs.CustomTabsServiceConnection
+import androidx.browser.customtabs.CustomTabsSession
 import androidx.core.content.ContextCompat
 import com.ottarson.hackerreader.R
 

@@ -3,8 +3,7 @@ package com.ottarson.hackerreader.ui.newslist
 import android.net.Uri
 import com.ottarson.hackerreader.data.models.Story
 import com.ottarson.hackerreader.utils.getTimePast
-import java.net.URL
-import java.util.*
+import java.util.Date
 
 class StoryViewObject(
     private val story: Story
