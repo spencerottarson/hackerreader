@@ -18,7 +18,6 @@
     <fragment
         android:id="@+id/commentsFragment"
         android:name="com.ottarson.hackerreader.ui.comments.CommentsFragment"
-        android:label="fragment_comments"
         tools:layout="@layout/fragment_comments" >
         <argument
             android:name="STORY_ID"
