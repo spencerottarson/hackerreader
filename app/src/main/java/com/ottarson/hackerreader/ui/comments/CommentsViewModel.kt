@@ -20,7 +20,8 @@ class CommentsViewModel : ViewModel() {
     private val liveDataComments = MutableLiveData<MutableList<CommentsViewObject>>()
     private val liveDataStory = MutableLiveData<StoryViewObject>()
 
-    private val allComments = HashMap<Int, CommentsViewObject>()
+    private val commentMap = HashMap<Int, CommentsViewObject>()
+    private val allComments = mutableListOf<CommentsViewObject>()
 
     override fun onCleared() {
         super.onCleared()
@@ -48,16 +49,31 @@ class CommentsViewModel : ViewModel() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ comment ->
                 comment.id?.let { id ->
-                    val parentDepth = allComments[comment.parent]?.depth ?: -1
+                    val parentDepth = commentMap[comment.parent]?.depth ?: -1
                     val commentViewObject = CommentsViewObject(comment, parentDepth + 1)
-                    allComments[id] = commentViewObject
-                    liveDataComments.value = liveDataComments.value?.apply {
-                        add(commentViewObject)
-                    }
+                    commentMap[id] = commentViewObject
+                    allComments.add(commentViewObject)
+                    liveDataComments.value = allComments
                 }
                 Log.i(javaClass.simpleName, comment.text ?: "No comment")
             }, { error ->
                 Log.e(javaClass.simpleName, "Error retrieving comments", error)
             })
+    }
+
+    fun toggleComment(id: Int) {
+        commentMap[id]?.collapsed = commentMap[id]?.collapsed?.not() ?: false
+        toggleCommentChildren(commentMap[id]?.childIds)
+
+        liveDataComments.value = allComments.filter { !it.hidden }.toMutableList()
+    }
+
+    private fun toggleCommentChildren(ids: List<Int>?) {
+        ids?.forEach { id ->
+            commentMap[id]?.hidden = commentMap[id]?.hidden?.not() ?: false
+            if (commentMap[id]?.collapsed == false) {
+                toggleCommentChildren(commentMap[id]?.childIds)
+            }
+        }
     }
 }

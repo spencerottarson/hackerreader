@@ -46,5 +46,11 @@ class CommentsFragment : Fragment() {
         viewModel.getLiveDataStory().observe(this, Observer { story ->
             (activity as? AppCompatActivity)?.supportActionBar?.title = story.title
         })
+
+        commentListView.setOnItemClickListener { _, _, position, _ ->
+            adapter.getItem(position)?.id?.let { commentId ->
+                viewModel.toggleComment(commentId)
+            }
+        }
     }
 }
