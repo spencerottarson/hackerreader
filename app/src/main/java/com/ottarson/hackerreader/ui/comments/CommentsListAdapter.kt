@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.ottarson.hackerreader.R
 import com.ottarson.hackerreader.utils.dp
+import com.ottarson.hackerreader.utils.setVisibleOrGone
 
 class CommentsListAdapter(
     context: Context,
@@ -37,6 +38,8 @@ class CommentsListAdapter(
             8.dp(context),
             8.dp(context)
         )
+
+        bodyView?.setVisibleOrGone(getItem(position)?.collapsed == false)
 
         return view!!
     }
