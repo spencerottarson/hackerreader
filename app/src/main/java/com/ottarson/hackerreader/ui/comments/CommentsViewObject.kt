@@ -14,4 +14,7 @@ class CommentsViewObject(
     val text = Html.fromHtml(comment.text ?: "")?.trim()
     val time = comment.time?.let { Date(it * 1000) }
     val heading = "$author • ${time?.getTimePast() ?: ""}"
+    val childIds = comment.kids ?: arrayListOf()
+    var collapsed = false
+    var hidden = false
 }
