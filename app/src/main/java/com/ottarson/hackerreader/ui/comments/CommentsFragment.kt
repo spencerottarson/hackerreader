@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -36,10 +37,14 @@ class CommentsFragment : Fragment() {
             viewModel.loadPage(id)
         }
 
-        viewModel.getLiveData().observe(this, Observer<List<CommentsViewObject>> { comments ->
+        viewModel.getLiveDataComment().observe(this, Observer<List<CommentsViewObject>> { comments ->
             adapter.clear()
             adapter.addAll(comments)
             adapter.notifyDataSetChanged()
+        })
+
+        viewModel.getLiveDataStory().observe(this, Observer { story ->
+            (activity as? AppCompatActivity)?.supportActionBar?.title = story.title
         })
     }
 

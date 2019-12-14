@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.ottarson.hackerreader.data.network.ApiModule
 import com.ottarson.hackerreader.data.repositories.CommentsRepository
 import com.ottarson.hackerreader.data.repositories.StoriesRepository
+import com.ottarson.hackerreader.ui.newslist.StoryViewObject
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -16,7 +17,9 @@ class CommentsViewModel : ViewModel() {
 
     private var disposable: Disposable? = null
 
-    private val liveData = MutableLiveData<MutableList<CommentsViewObject>>()
+    private val liveDataComments = MutableLiveData<MutableList<CommentsViewObject>>()
+    private val liveDataStory = MutableLiveData<StoryViewObject>()
+
     private val allComments = HashMap<Int, CommentsViewObject>()
 
     override fun onCleared() {
@@ -24,14 +27,19 @@ class CommentsViewModel : ViewModel() {
         disposable?.dispose()
     }
 
-    fun getLiveData(): MutableLiveData<MutableList<CommentsViewObject>> {
-        return liveData
+    fun getLiveDataComment(): MutableLiveData<MutableList<CommentsViewObject>> {
+        return liveDataComments
+    }
+
+    fun getLiveDataStory(): MutableLiveData<StoryViewObject> {
+        return liveDataStory
     }
 
     fun loadPage(id: Int, forceRefresh: Boolean = true) {
-        liveData.value = mutableListOf()
+        liveDataComments.value = mutableListOf()
         disposable = storyRepository.getStory(id)
             .flatMap { story ->
+                liveDataStory.postValue((StoryViewObject(story)))
                 story.kids?.let { kids ->
                     commentsRepository.getComments(kids)
                 }
@@ -43,7 +51,7 @@ class CommentsViewModel : ViewModel() {
                     val parentDepth = allComments[comment.parent]?.depth ?: -1
                     val commentViewObject = CommentsViewObject(comment, parentDepth + 1)
                     allComments[id] = commentViewObject
-                    liveData.value = liveData.value?.apply {
+                    liveDataComments.value = liveDataComments.value?.apply {
                         add(commentViewObject)
                     }
                 }
