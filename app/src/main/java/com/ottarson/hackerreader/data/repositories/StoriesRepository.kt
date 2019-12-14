@@ -21,6 +21,10 @@ class StoriesRepository(
         }
     }
 
+    fun getStory(id: Int): Observable<Story> {
+        return storiesService.getStory(id)
+    }
+
     private fun getStoryIds(forceRefresh: Boolean = false): Observable<List<Int>> {
         return if (forceRefresh || storyIds.isNullOrEmpty()) {
             storiesService.getStories().doOnNext { storyIds = it }

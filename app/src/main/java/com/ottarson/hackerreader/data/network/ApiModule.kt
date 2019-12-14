@@ -27,4 +27,5 @@ class ApiModule {
         .build()
 
     val storiesService: StoriesService = retrofit.create(StoriesService::class.java)
+    val commentsService: CommentsService = retrofit.create(CommentsService::class.java)
 }

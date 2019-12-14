@@ -5,7 +5,9 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:descendantFocusability="blocksDescendants"
+    >
 
     <TextView
         android:id="@+id/itemNewsListTitle"
@@ -45,26 +47,45 @@
             tools:text="blog.nuclearsecrecy.com"
             />
 
-        <ImageView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/itemNewsListComments"
-            android:layout_width="36dp"
-            android:layout_height="32dp"
-            android:src="@drawable/ic_comment"
-            android:tint="@color/colorAccent"
-            app:layout_constraintEnd_toStartOf="@+id/itemNewsListNumComments"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
-
-        <TextView
-            android:id="@+id/itemNewsListNumComments"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/List_Item_Comments"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginEnd="4dp"
-            tools:text="123"
-            />
+            android:padding="8dp"
+            android:background="?android:attr/selectableItemBackground"
+            >
+
+            <ImageView
+                android:id="@+id/itemNewsListCommentsIcon"
+                android:layout_width="36dp"
+                android:layout_height="32dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/itemNewsListNumComments"
+                android:src="@drawable/ic_comment"
+                android:tint="@color/colorAccent"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/comments"
+                />
+
+            <TextView
+                android:id="@+id/itemNewsListNumComments"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/itemNewsListCommentsIcon"
+                style="@style/List_Item_Comments"
+                android:layout_marginEnd="4dp"
+                tools:text="123"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

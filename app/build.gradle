@@ -54,6 +54,7 @@ dependencies {
     def roomVersion = "2.2.2"
     implementation "androidx.room:room-runtime:$roomVersion"
     implementation "androidx.room:room-ktx:$roomVersion"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt "androidx.room:room-compiler:$roomVersion"
 
     // Lifecycle Components
@@ -112,4 +113,3 @@ task ktlintFormat(type: JavaExec, group: "formatting") {
     main = "com.pinterest.ktlint.Main"
     args "--android", "-F", "src/**/*.kt"
 }
-
