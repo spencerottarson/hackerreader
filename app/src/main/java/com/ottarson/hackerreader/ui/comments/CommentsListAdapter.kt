@@ -6,11 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import com.ottarson.hackerreader.R
 import com.ottarson.hackerreader.utils.dp
 
 class CommentsListAdapter(
     context: Context,
-    val resourse: Int = android.R.layout.simple_list_item_1
+    val resourse: Int = R.layout.item_comment
 ) : ArrayAdapter<CommentsViewObject>(context, resourse) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -23,14 +24,18 @@ class CommentsListAdapter(
             )
         }
 
-        val textView = view?.findViewById<TextView>(android.R.id.text1)
-        textView?.text = getItem(position)?.text
+        val containerView = view?.findViewById<ViewGroup>(R.id.itemComment)
+        val headingView = view?.findViewById<TextView>(R.id.itemCommentHeading)
+        val bodyView = view?.findViewById<TextView>(R.id.itemCommentBody)
 
-        textView?.setPadding(
-            (getItem(position)?.depth ?: 0) * 20.dp(context),
-            0,
-            0,
-            0
+        headingView?.text = getItem(position)?.heading
+        bodyView?.text = getItem(position)?.text
+
+        containerView?.setPadding(
+            (getItem(position)?.depth ?: 0) * 20.dp(context) + 8.dp(context),
+            8.dp(context),
+            8.dp(context),
+            8.dp(context)
         )
 
         return view!!
