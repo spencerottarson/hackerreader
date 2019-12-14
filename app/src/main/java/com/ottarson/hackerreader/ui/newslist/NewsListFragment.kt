@@ -61,6 +61,8 @@ class NewsListFragment : Fragment() {
         newsListSwipeRefresh.setOnRefreshListener {
             viewModel.loadPage()
         }
+
+        setupInfiniteScroll()
     }
 
     override fun onDestroy() {
