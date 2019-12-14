@@ -1,6 +1,6 @@
 package com.ottarson.hackerreader.utils
 
-import java.util.*
+import java.util.Date
 import java.util.concurrent.TimeUnit
 
 fun Date.getTimePast(): String {

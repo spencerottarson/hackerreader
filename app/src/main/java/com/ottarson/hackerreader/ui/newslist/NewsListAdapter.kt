@@ -6,11 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import androidx.core.graphics.drawable.DrawableCompat
 import com.ottarson.hackerreader.R
-import com.ottarson.hackerreader.ui.shared.WebsiteOpener
 import com.ottarson.hackerreader.utils.setVisibleOrGone
-import org.w3c.dom.Text
 
 class NewsListAdapter(
     context: Context,
