@@ -1,9 +1,11 @@
 package com.ottarson.hackerreader.ui.newslist
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -18,6 +20,8 @@ class NewsListFragment : Fragment() {
     private lateinit var adapter: NewsListAdapter
 
     private var websiteOpener: WebsiteOpener? = null
+
+    private var shouldLoadMore = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,6 +56,8 @@ class NewsListFragment : Fragment() {
             websiteOpener?.setPotentialUrls(stories.mapNotNull { it.url })
         })
 
+        viewModel.getLiveDataShouldLoadMore().observe(this, Observer { shouldLoadMore = it })
+
         newsListSwipeRefresh.setOnRefreshListener {
             viewModel.loadPage()
         }
@@ -60,5 +66,26 @@ class NewsListFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         websiteOpener?.unbindService()
+    }
+
+    private fun setupInfiniteScroll() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            newsListView.setOnScrollChangeListener { _, _, _, _, _ ->
+                if (shouldLoadMore()) {
+                    viewModel.loadMore()
+                }
+            }
+        } else {
+            newsListView.addFooterView(Button(requireContext()).apply {
+                text = getString(R.string.load_more)
+                setOnClickListener {
+                    viewModel.loadMore()
+                }
+            })
+        }
+    }
+
+    private fun shouldLoadMore(): Boolean {
+        return shouldLoadMore && newsListView.lastVisiblePosition == newsListView.adapter.count - 2
     }
 }

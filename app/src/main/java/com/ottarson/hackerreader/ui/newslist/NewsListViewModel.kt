@@ -14,8 +14,10 @@ class NewsListViewModel : ViewModel() {
     private val storiesRepository = StoriesRepository(ApiModule().storiesService)
 
     private val liveData = MutableLiveData<MutableList<StoryViewObject>>()
+    private val liveDataLoadMore = MutableLiveData<Boolean>(false)
 
     private var disposable: Disposable? = null
+    private var countLoaded = 0
 
     init {
         loadPage(false)
@@ -25,6 +27,10 @@ class NewsListViewModel : ViewModel() {
         return liveData
     }
 
+    fun getLiveDataShouldLoadMore(): LiveData<Boolean> {
+        return liveDataLoadMore
+    }
+
     override fun onCleared() {
         super.onCleared()
         disposable?.dispose()
@@ -32,15 +38,25 @@ class NewsListViewModel : ViewModel() {
 
     fun loadPage(forceRefresh: Boolean = true) {
         liveData.value = mutableListOf()
-        disposable = storiesRepository.getTopStories(forceRefresh = forceRefresh)
+        countLoaded = 0
+        loadMore(forceRefresh)
+    }
+
+    fun loadMore(forceRefresh: Boolean = false) {
+        liveDataLoadMore.value = false
+        disposable = storiesRepository.getTopStories(countLoaded, 20, forceRefresh)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ story ->
+                countLoaded++
                 liveData.value = liveData.value?.apply {
                     add(StoryViewObject(story))
                 }
             }, { error ->
                 Log.e(javaClass.simpleName, "Error: ", error)
+                liveDataLoadMore.value = true
+            }, {
+                liveDataLoadMore.value = true
             })
     }
 }
