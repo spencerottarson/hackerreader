@@ -6,6 +6,6 @@ data class Comment(
     val kids: ArrayList<Int>?,
     val parent: Int?,
     val text: String?,
-    val time: Int?,
+    val time: Long?,
     val type: String?
 )
