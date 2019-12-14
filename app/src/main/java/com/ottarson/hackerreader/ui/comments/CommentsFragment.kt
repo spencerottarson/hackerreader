@@ -37,7 +37,7 @@ class CommentsFragment : Fragment() {
             viewModel.loadPage(id)
         }
 
-        viewModel.getLiveDataComment().observe(this, Observer<List<CommentsViewObject>> { comments ->
+        viewModel.getLiveDataComment().observe(this, Observer { comments ->
             adapter.clear()
             adapter.addAll(comments)
             adapter.notifyDataSetChanged()
@@ -46,9 +46,5 @@ class CommentsFragment : Fragment() {
         viewModel.getLiveDataStory().observe(this, Observer { story ->
             (activity as? AppCompatActivity)?.supportActionBar?.title = story.title
         })
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
     }
 }
