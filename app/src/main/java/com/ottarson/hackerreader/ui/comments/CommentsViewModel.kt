@@ -11,9 +11,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
-class CommentsViewModel : ViewModel() {
-    private val commentsRepository = CommentsRepository(ApiModule().commentsService)
-    private val storyRepository = StoriesRepository(ApiModule().storiesService)
+class CommentsViewModel(
+    private val storyRepository: StoriesRepository,
+    private val commentsRepository: CommentsRepository
+) : ViewModel() {
 
     private var disposable: Disposable? = null
 

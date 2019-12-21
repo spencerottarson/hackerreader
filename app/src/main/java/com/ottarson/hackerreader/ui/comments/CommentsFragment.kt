@@ -9,9 +9,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.ottarson.hackerreader.R
+import com.ottarson.hackerreader.ui.shared.ViewModelFactory
+import com.ottarson.hackerreader.utils.getInjector
 import kotlinx.android.synthetic.main.fragment_comments.commentListView
+import javax.inject.Inject
 
 class CommentsFragment : Fragment() {
+
+    @Inject lateinit var viewModelFactory: ViewModelFactory
 
     private lateinit var viewModel: CommentsViewModel
 
@@ -28,8 +33,9 @@ class CommentsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        getInjector().inject(this)
 
-        viewModel = ViewModelProviders.of(this).get(CommentsViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(CommentsViewModel::class.java)
         adapter = CommentsListAdapter(requireContext())
         commentListView.adapter = adapter
 

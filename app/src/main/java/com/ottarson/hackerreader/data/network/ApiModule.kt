@@ -1,12 +1,15 @@
 package com.ottarson.hackerreader.data.network
 
 import com.ottarson.hackerreader.BuildConfig
+import dagger.Module
+import dagger.Provides
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
+@Module
 class ApiModule {
 
     private val okHttpClient = OkHttpClient.Builder().apply {
@@ -26,6 +29,13 @@ class ApiModule {
         .client(okHttpClient)
         .build()
 
-    val storiesService: StoriesService = retrofit.create(StoriesService::class.java)
-    val commentsService: CommentsService = retrofit.create(CommentsService::class.java)
+    @Provides
+    fun provideStoriesService(): StoriesService {
+        return retrofit.create(StoriesService::class.java)
+    }
+
+    @Provides
+    fun provideCommentsService(): CommentsService {
+        return retrofit.create(CommentsService::class.java)
+    }
 }

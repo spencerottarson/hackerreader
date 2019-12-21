@@ -3,8 +3,9 @@ package com.ottarson.hackerreader.data.repositories
 import com.ottarson.hackerreader.data.models.Story
 import com.ottarson.hackerreader.data.network.StoriesService
 import io.reactivex.Observable
+import javax.inject.Inject
 
-class StoriesRepository(
+class StoriesRepository @Inject constructor(
     private val storiesService: StoriesService
 ) {
     private var storyIds: List<Int>? = null
