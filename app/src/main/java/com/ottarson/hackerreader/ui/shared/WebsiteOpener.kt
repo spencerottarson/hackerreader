@@ -26,22 +26,22 @@ class WebsiteOpener(
     private val customTabsServiceConnection: CustomTabsServiceConnection by lazy {
         object : CustomTabsServiceConnection() {
             override fun onCustomTabsServiceConnected(
-                name: ComponentName?,
-                client: CustomTabsClient?
+                name: ComponentName,
+                client: CustomTabsClient
             ) {
                 chromeClient = client
                 chromeClient?.warmup(0)
                 chromeSession = chromeClient?.newSession(null)
                 bound = true
-                urls.let {
+                urls?.let {
                     chromeSession?.mayLaunchUrl(
-                        urls?.first(),
+                        it.first(),
                         null,
-                        urls?.subList(1, urls?.lastIndex ?: 0)?.map { url ->
+                        it.subList(1, it.lastIndex).map { url ->
                             Bundle().apply {
                                 putParcelable(CustomTabsService.KEY_URL, url)
                             }
-                        } ?: listOf()
+                        }
                     )
                 }
             }

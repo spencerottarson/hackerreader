@@ -3,8 +3,9 @@ package com.ottarson.hackerreader.data.repositories
 import com.ottarson.hackerreader.data.models.Comment
 import com.ottarson.hackerreader.data.network.CommentsService
 import io.reactivex.Observable
+import javax.inject.Inject
 
-class CommentsRepository(
+class CommentsRepository @Inject constructor(
     private val commentsService: CommentsService
 ) {
 
