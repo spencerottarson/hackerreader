@@ -51,9 +51,13 @@ class CommentsViewModel : ViewModel() {
                 comment.id?.let { id ->
                     val parentDepth = commentMap[comment.parent]?.depth ?: -1
                     val commentViewObject = CommentsViewObject(comment, parentDepth + 1)
+                    commentViewObject.hidden =
+                        commentMap[comment.parent]?.hidden == true ||
+                                commentMap[comment.parent]?.collapsed == true
+
                     commentMap[id] = commentViewObject
                     allComments.add(commentViewObject)
-                    liveDataComments.value = allComments
+                    liveDataComments.value = allComments.filter { !it.hidden }.toMutableList()
                 }
                 Log.i(javaClass.simpleName, comment.text ?: "No comment")
             }, { error ->

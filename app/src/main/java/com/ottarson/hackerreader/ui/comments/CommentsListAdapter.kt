@@ -1,6 +1,8 @@
 package com.ottarson.hackerreader.ui.comments
 
 import android.content.Context
+import android.os.Build
+import android.text.util.Linkify
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,6 +33,10 @@ class CommentsListAdapter(
 
         headingView?.text = getItem(position)?.heading
         bodyView?.text = getItem(position)?.text
+
+        bodyView?.let {
+            Linkify.addLinks(it, Linkify.WEB_URLS)
+        }
 
         containerView?.setPadding(
             (getItem(position)?.depth ?: 0) * 20.dp(context) + 8.dp(context),
