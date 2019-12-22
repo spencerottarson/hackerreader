@@ -3,7 +3,6 @@ package com.ottarson.hackerreader.ui.comments
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.ottarson.hackerreader.data.network.ApiModule
 import com.ottarson.hackerreader.data.repositories.CommentsRepository
 import com.ottarson.hackerreader.data.repositories.StoriesRepository
 import com.ottarson.hackerreader.ui.newslist.StoryViewObject
@@ -18,18 +17,18 @@ class CommentsViewModel(
 
     private var disposable: Disposable? = null
 
-    private val liveDataComments = MutableLiveData<MutableList<CommentsViewObject>>()
+    private val liveDataComments = MutableLiveData<MutableList<CommentViewObject>>()
     private val liveDataStory = MutableLiveData<StoryViewObject>()
 
-    private val commentMap = HashMap<Int, CommentsViewObject>()
-    private val allComments = mutableListOf<CommentsViewObject>()
+    private val commentMap = HashMap<Int, CommentViewObject>()
+    private val allComments = mutableListOf<CommentViewObject>()
 
     override fun onCleared() {
         super.onCleared()
         disposable?.dispose()
     }
 
-    fun getLiveDataComment(): MutableLiveData<MutableList<CommentsViewObject>> {
+    fun getLiveDataComment(): MutableLiveData<MutableList<CommentViewObject>> {
         return liveDataComments
     }
 
@@ -51,7 +50,7 @@ class CommentsViewModel(
             .subscribe({ comment ->
                 comment.id?.let { id ->
                     val parentDepth = commentMap[comment.parent]?.depth ?: -1
-                    val commentViewObject = CommentsViewObject(comment, parentDepth + 1)
+                    val commentViewObject = CommentViewObject(comment, parentDepth + 1)
                     commentViewObject.hidden =
                         commentMap[comment.parent]?.hidden == true ||
                                 commentMap[comment.parent]?.collapsed == true

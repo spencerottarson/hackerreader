@@ -6,7 +6,7 @@ import com.ottarson.hackerreader.utils.getTimePast
 import java.util.Date
 
 class StoryViewObject(
-    private val story: Story
+    story: Story
 ) {
     val id = story.id
     val author = story.by
