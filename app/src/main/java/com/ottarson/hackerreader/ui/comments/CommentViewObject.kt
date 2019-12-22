@@ -5,7 +5,7 @@ import com.ottarson.hackerreader.data.models.Comment
 import com.ottarson.hackerreader.utils.getTimePast
 import java.util.Date
 
-class CommentsViewObject(
+class CommentViewObject(
     comment: Comment,
     val depth: Int = 0
 ) {
