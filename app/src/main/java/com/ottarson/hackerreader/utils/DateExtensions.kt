@@ -1,5 +1,6 @@
 package com.ottarson.hackerreader.utils
 
+import java.util.Calendar
 import java.util.Date
 import java.util.concurrent.TimeUnit
 
@@ -43,4 +44,11 @@ fun Date.getTimePast(): String {
     }
 
     return "$number $unit ago"
+}
+
+fun Date.addTime(amount: Int, timeUnit: Int): Date {
+    val calendar = Calendar.getInstance()
+    calendar.time = this
+    calendar.add(timeUnit, amount)
+    return calendar.time
 }
