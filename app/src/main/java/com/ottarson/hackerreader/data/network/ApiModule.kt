@@ -10,7 +10,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 @Module
-class ApiModule {
+open class ApiModule {
 
     private val okHttpClient = OkHttpClient.Builder().apply {
         if (BuildConfig.DEBUG) {
@@ -30,12 +30,12 @@ class ApiModule {
         .build()
 
     @Provides
-    fun provideStoriesService(): StoriesService {
+    open fun provideStoriesService(): StoriesService {
         return retrofit.create(StoriesService::class.java)
     }
 
     @Provides
-    fun provideCommentsService(): CommentsService {
+    open fun provideCommentsService(): CommentsService {
         return retrofit.create(CommentsService::class.java)
     }
 }

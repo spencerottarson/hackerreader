@@ -13,8 +13,8 @@ import com.ottarson.hackerreader.R
 import com.ottarson.hackerreader.ui.shared.ViewModelFactory
 import com.ottarson.hackerreader.ui.shared.WebsiteOpener
 import com.ottarson.hackerreader.utils.getInjector
-import kotlinx.android.synthetic.main.fragment_news_list.*
 import javax.inject.Inject
+import kotlinx.android.synthetic.main.fragment_news_list.*
 
 class NewsListFragment : Fragment() {
 

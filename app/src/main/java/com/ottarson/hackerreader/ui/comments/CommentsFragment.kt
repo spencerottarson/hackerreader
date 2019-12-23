@@ -11,8 +11,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.ottarson.hackerreader.R
 import com.ottarson.hackerreader.ui.shared.ViewModelFactory
 import com.ottarson.hackerreader.utils.getInjector
-import kotlinx.android.synthetic.main.fragment_comments.commentListView
 import javax.inject.Inject
+import kotlinx.android.synthetic.main.fragment_comments.commentListView
 
 class CommentsFragment : Fragment() {
 

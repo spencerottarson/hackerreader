@@ -3,19 +3,14 @@ package com.ottarson.hackerreader.data.repositories
 import com.ottarson.hackerreader.data.models.Story
 import com.ottarson.hackerreader.data.network.StoriesService
 import com.ottarson.hackerreader.utils.addTime
-import io.mockk.clearMocks
-import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import io.reactivex.Observable
-import org.junit.Test
-
-
-import org.junit.Assert.*
-import org.junit.Before
 import java.util.Calendar
 import java.util.Date
+import org.junit.Before
+import org.junit.Test
 
 class StoriesRepositoryTest {
 
@@ -26,11 +21,11 @@ class StoriesRepositoryTest {
     fun setup() {
         service = mockk()
 
-        every { service.getStories() } returns Observable.just(listOf(1, 2, 3))
+        every { service.getStories() } returns Observable.just(listOf(1, 2))
         every { service.getStory(1) } returns Observable.just(story)
         every { service.getStory(2) } returns Observable.just(story2)
 
-        repository = StoriesRepository(service)
+        repository = StoriesRepositoryImpl(service)
     }
 
     @Test
@@ -43,6 +38,22 @@ class StoriesRepositoryTest {
         testObservable.assertValueAt(1) {
             it.title == "title2"
         }
+        testObservable.assertComplete()
+    }
+
+    @Test
+    fun testGetTopStories_fewerStoriesThanRequested() {
+        val testObservable = repository.getTopStories().test()
+        verify(exactly = 1) { service.getStories() }
+        testObservable.assertValueCount(2)
+        testObservable.assertComplete()
+    }
+
+    @Test
+    fun testGetTopStories_startIndexOutOfRange() {
+        val testObservable = repository.getTopStories(4).test()
+        verify(exactly = 1) { service.getStories() }
+        testObservable.assertNoValues()
         testObservable.assertComplete()
     }
 
@@ -81,7 +92,7 @@ class StoriesRepositoryTest {
         1,
         arrayListOf(10, 11, 12),
         500,
-        Date().addTime(4, Calendar.HOUR).time,
+        Date().addTime(4, Calendar.HOUR).time / 1000,
         "title1",
         "story",
         "https://www.example.com/somepath"
@@ -93,7 +104,7 @@ class StoriesRepositoryTest {
         2,
         arrayListOf(10, 11, 12),
         500,
-        Date().addTime(4, Calendar.HOUR).time,
+        Date().addTime(4, Calendar.HOUR).time / 1000,
         "title2",
         "story",
         "https://www.example.com/somepath"
