@@ -2,15 +2,13 @@ package com.ottarson.hackerreader.ui.newslist
 
 import com.ottarson.hackerreader.data.models.Story
 import com.ottarson.hackerreader.utils.addTime
-import org.junit.Before
-import org.junit.Test
-
-
-import org.junit.Assert.*
-import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
 import java.util.Calendar
 import java.util.Date
+import kotlin.test.assertEquals
+import org.junit.Before
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 
 @RunWith(RobolectricTestRunner::class)
 class StoryViewObjectTest {
