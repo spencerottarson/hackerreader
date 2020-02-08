@@ -10,10 +10,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.ottarson.hackerreader.R
+import com.ottarson.hackerreader.ui.shared.ViewModelFactory
 import com.ottarson.hackerreader.ui.shared.WebsiteOpener
+import com.ottarson.hackerreader.utils.getInjector
+import javax.inject.Inject
 import kotlinx.android.synthetic.main.fragment_news_list.*
 
 class NewsListFragment : Fragment() {
+
+    @Inject lateinit var viewModelFactory: ViewModelFactory
 
     private lateinit var viewModel: NewsListViewModel
 
@@ -33,7 +38,11 @@ class NewsListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(NewsListViewModel::class.java)
+        getInjector().inject(this)
+        viewModel = ViewModelProviders.of(
+            this,
+            viewModelFactory
+        ).get(NewsListViewModel::class.java)
 
         adapter = NewsListAdapter(requireContext())
         newsListView.adapter = adapter

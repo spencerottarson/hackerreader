@@ -1,7 +1,6 @@
 package com.ottarson.hackerreader.ui.comments
 
 import android.content.Context
-import android.os.Build
 import android.text.util.Linkify
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +14,7 @@ import com.ottarson.hackerreader.utils.setVisibleOrGone
 class CommentsListAdapter(
     context: Context,
     val resourse: Int = R.layout.item_comment
-) : ArrayAdapter<CommentsViewObject>(context, resourse) {
+) : ArrayAdapter<CommentViewObject>(context, resourse) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var view = convertView
