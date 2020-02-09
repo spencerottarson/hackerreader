@@ -40,7 +40,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.browser:browser:1.2.0'
-    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'com.google.android.material:material:1.0.0'
 
     def appCompatVersion = "1.1.0"
     implementation "androidx.appcompat:appcompat:$appCompatVersion"

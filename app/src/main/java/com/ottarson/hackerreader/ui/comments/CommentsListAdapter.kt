@@ -1,7 +1,6 @@
 package com.ottarson.hackerreader.ui.comments
 
 import android.content.Context
-import android.text.util.Linkify
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,8 @@ import com.ottarson.hackerreader.utils.setVisibleOrGone
 
 class CommentsListAdapter(
     context: Context,
-    val resourse: Int = R.layout.item_comment
+    val resourse: Int = R.layout.item_comment,
+    val delegate: CommentInteractionDelegate? = null
 ) : ArrayAdapter<CommentViewObject>(context, resourse) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -33,10 +33,6 @@ class CommentsListAdapter(
         headingView?.text = getItem(position)?.heading
         bodyView?.text = getItem(position)?.text
 
-        bodyView?.let {
-            Linkify.addLinks(it, Linkify.WEB_URLS)
-        }
-
         containerView?.setPadding(
             (getItem(position)?.depth ?: 0) * 20.dp(context) + 8.dp(context),
             8.dp(context),
@@ -45,6 +41,14 @@ class CommentsListAdapter(
         )
 
         bodyView?.setVisibleOrGone(getItem(position)?.collapsed == false)
+
+        containerView?.isClickable = true
+
+        view?.setOnClickListener {
+            getItem(position)?.id?.let {
+                delegate?.onItemClicked(it)
+            }
+        }
 
         return view!!
     }
