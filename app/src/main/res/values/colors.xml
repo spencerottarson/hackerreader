@@ -9,4 +9,8 @@
 
     <color name="textColorDarkMode">#DDDDDD</color>
     <color name="textColorLightDarkMode">#AAAAAA</color>
+
+    <color name="linkColor">#0000FF</color>
+    <color name="linkColorDarkMode">#14E4FF</color>
+
 </resources>

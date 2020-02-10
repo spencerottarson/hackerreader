@@ -1,7 +1,7 @@
 package com.ottarson.hackerreader.ui.shared
 
 import android.content.Context
-import android.graphics.Color
+import android.content.res.Configuration
 import android.net.Uri
 import android.text.Selection
 import android.text.Spannable
@@ -11,11 +11,13 @@ import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.method.Touch
 import android.text.style.ClickableSpan
+import android.text.style.URLSpan
 import android.util.AttributeSet
-import android.util.Patterns
 import android.view.MotionEvent
 import android.view.View
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import com.ottarson.hackerreader.R
 
 class ClickableTextView @JvmOverloads constructor(
     context: Context,
@@ -26,19 +28,23 @@ class ClickableTextView @JvmOverloads constructor(
     private var linkHit = false
 
     override fun setText(text: CharSequence?, type: BufferType?) {
-        super.setText(text, type)
+        if (text is Spanned) {
+            setText(text, type)
+        } else {
+            super.setText(text, type)
+        }
+    }
+
+    private fun setText(text: Spanned?, type: BufferType?) {
         val spannableString = SpannableString(text)
 
-        val matcher = Patterns.WEB_URL.matcher(spannableString)
+        val spans = text?.getSpans(0, text.length, URLSpan::class.java)
 
-        while (matcher.find()) {
-            val start = matcher.start()
-            val end = matcher.end()
-
+        spans?.forEach { span ->
             spannableString.setSpan(
-                CustomClickableSpan(context, matcher.group()),
-                start,
-                end,
+                CustomClickableSpan(context, span.url),
+                spannableString.getSpanStart(span),
+                spannableString.getSpanEnd(span),
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
             )
         }
@@ -64,7 +70,17 @@ class ClickableTextView @JvmOverloads constructor(
 
         override fun updateDrawState(ds: TextPaint) {
             super.updateDrawState(ds)
-            ds.color = Color.CYAN
+            val mode = context.resources?.configuration?.uiMode
+                ?.and(Configuration.UI_MODE_NIGHT_MASK)
+
+            ds.color = when (mode) {
+                Configuration.UI_MODE_NIGHT_YES -> {
+                    ContextCompat.getColor(context, R.color.linkColorDarkMode)
+                }
+                else -> {
+                    ContextCompat.getColor(context, R.color.linkColor)
+                }
+            }
             ds.isUnderlineText = true
         }
     }
@@ -86,9 +102,8 @@ class ClickableTextView @JvmOverloads constructor(
             buffer: Spannable,
             event: MotionEvent
         ): Boolean {
-            val action = event.action
-            if (action == MotionEvent.ACTION_UP ||
-                action == MotionEvent.ACTION_DOWN
+            if (event.action == MotionEvent.ACTION_UP ||
+                event.action == MotionEvent.ACTION_DOWN
             ) {
                 var x = event.x.toInt()
                 var y = event.y.toInt()
@@ -102,10 +117,10 @@ class ClickableTextView @JvmOverloads constructor(
                 val link = buffer.getSpans(
                     off, off, CustomClickableSpan::class.java
                 )
-                return if (link.size != 0) {
-                    if (action == MotionEvent.ACTION_UP) {
+                return if (link.isNotEmpty()) {
+                    if (event.action == MotionEvent.ACTION_UP) {
                         link[0].onClick(widget)
-                    } else if (action == MotionEvent.ACTION_DOWN) {
+                    } else if (event.action == MotionEvent.ACTION_DOWN) {
                         Selection.setSelection(
                             buffer,
                             buffer.getSpanStart(link[0]),

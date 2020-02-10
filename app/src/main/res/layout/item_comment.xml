@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.ottarson.hackerreader.ui.shared.CustomLinearLayout
+<com.ottarson.hackerreader.ui.shared.NoFocusableLinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/itemComment"
@@ -26,4 +26,4 @@
         tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"
         />
 
-</com.ottarson.hackerreader.ui.shared.CustomLinearLayout>
+</com.ottarson.hackerreader.ui.shared.NoFocusableLinearLayout>
