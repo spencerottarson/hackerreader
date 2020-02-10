@@ -16,6 +16,8 @@ class CommentsListAdapter(
     val delegate: CommentInteractionDelegate? = null
 ) : ArrayAdapter<CommentViewObject>(context, resourse) {
 
+    private val colors: IntArray = context.resources.getIntArray(R.array.depthColors)
+
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var view = convertView
         if (view == null) {
@@ -29,12 +31,19 @@ class CommentsListAdapter(
         val containerView = view?.findViewById<ViewGroup>(R.id.itemComment)
         val headingView = view?.findViewById<TextView>(R.id.itemCommentHeading)
         val bodyView = view?.findViewById<TextView>(R.id.itemCommentBody)
+        val colorIndicator = view?.findViewById<View>(R.id.itemCommentDepthColor)
 
         headingView?.text = getItem(position)?.heading
         bodyView?.text = getItem(position)?.text
 
+        val depth = getItem(position)?.depth ?: 0
+
+        colorIndicator?.setBackgroundColor(
+            colors[depth % colors.count()]
+        )
+
         containerView?.setPadding(
-            (getItem(position)?.depth ?: 0) * 20.dp(context) + 8.dp(context),
+            depth * 15.dp(context) + 8.dp(context),
             8.dp(context),
             8.dp(context),
             8.dp(context)
