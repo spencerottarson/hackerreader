@@ -19,7 +19,6 @@
     </style>
 
     <style name="List_Item_Domain">
-
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/textColorLightDarkMode</item>
         <item name="android:textStyle">italic</item>

@@ -9,9 +9,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.ottarson.hackerreader.R
+import com.ottarson.hackerreader.ui.shared.ViewModelFactory
+import com.ottarson.hackerreader.utils.getInjector
+import javax.inject.Inject
 import kotlinx.android.synthetic.main.fragment_comments.commentListView
 
-class CommentsFragment : Fragment() {
+class CommentsFragment : Fragment(), CommentInteractionDelegate {
+
+    @Inject lateinit var viewModelFactory: ViewModelFactory
 
     private lateinit var viewModel: CommentsViewModel
 
@@ -28,9 +33,10 @@ class CommentsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        getInjector().inject(this)
 
-        viewModel = ViewModelProviders.of(this).get(CommentsViewModel::class.java)
-        adapter = CommentsListAdapter(requireContext())
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(CommentsViewModel::class.java)
+        adapter = CommentsListAdapter(requireContext(), delegate = this)
         commentListView.adapter = adapter
 
         arguments?.getInt("STORY_ID")?.let { id ->
@@ -46,11 +52,9 @@ class CommentsFragment : Fragment() {
         viewModel.getLiveDataStory().observe(this, Observer { story ->
             (activity as? AppCompatActivity)?.supportActionBar?.title = story.title
         })
+    }
 
-        commentListView.setOnItemClickListener { _, _, position, _ ->
-            adapter.getItem(position)?.id?.let { commentId ->
-                viewModel.toggleComment(commentId)
-            }
-        }
+    override fun onItemClicked(commentId: Int) {
+        viewModel.toggleComment(commentId)
     }
 }

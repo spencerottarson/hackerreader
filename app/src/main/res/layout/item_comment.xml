@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<com.ottarson.hackerreader.ui.shared.NoFocusableLinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/itemComment"
@@ -18,7 +18,7 @@
         tools:text="spencerottarson • 1 hour ago"
         />
 
-    <TextView
+    <com.ottarson.hackerreader.ui.shared.ClickableTextView
         android:id="@+id/itemCommentBody"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,4 +26,4 @@
         tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"
         />
 
-</LinearLayout>
+</com.ottarson.hackerreader.ui.shared.NoFocusableLinearLayout>
