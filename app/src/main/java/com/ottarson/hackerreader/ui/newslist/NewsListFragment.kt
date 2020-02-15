@@ -9,7 +9,9 @@ import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
 import com.ottarson.hackerreader.R
+import com.ottarson.hackerreader.ui.shared.ItemType
 import com.ottarson.hackerreader.ui.shared.ViewModelFactory
 import com.ottarson.hackerreader.ui.shared.WebsiteOpener
 import com.ottarson.hackerreader.utils.getInjector
@@ -52,9 +54,7 @@ class NewsListFragment : Fragment() {
         websiteOpener = WebsiteOpener(requireContext())
 
         newsListView.setOnItemClickListener { _, _, position, _ ->
-            adapter.getItem(position)?.url?.let { url ->
-                websiteOpener?.launch(url)
-            }
+            adapter.getItem(position)?.let { onItemClick(it) }
         }
 
         viewModel.getLiveData().observe(this, Observer<List<StoryViewObject>> { stories ->
@@ -98,5 +98,22 @@ class NewsListFragment : Fragment() {
 
     private fun shouldLoadMore(): Boolean {
         return shouldLoadMore && newsListView.lastVisiblePosition == newsListView.adapter.count - 2
+    }
+
+    private fun onItemClick(item: StoryViewObject) {
+        if (item.type == ItemType.Story) {
+            item.url?.let { url ->
+                websiteOpener?.launch(url)
+            } ?: run {
+                navigateToComments(item.id)
+            }
+        }
+    }
+
+    private fun navigateToComments(storyId: Int?) {
+        view?.findNavController()?.navigate(
+            R.id.action_newsListFragment_to_commentsFragment,
+            Bundle().apply { putInt("STORY_ID", storyId ?: 0) }
+        )
     }
 }

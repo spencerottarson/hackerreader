@@ -2,6 +2,7 @@ package com.ottarson.hackerreader.ui.newslist
 
 import android.net.Uri
 import com.ottarson.hackerreader.data.models.Story
+import com.ottarson.hackerreader.ui.shared.ItemType
 import com.ottarson.hackerreader.utils.getTimePast
 import java.util.Date
 
@@ -18,4 +19,5 @@ class StoryViewObject(
     val points = "${score}p"
     val subtitle = "$points • ${time?.getTimePast() ?: ""}"
     val domain = url?.host
+    val type = ItemType.fromString(story.type)
 }
