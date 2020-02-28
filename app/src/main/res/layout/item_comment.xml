@@ -5,25 +5,51 @@
     android:id="@+id/itemComment"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:padding="8dp"
     >
-    
-    <TextView
-        android:id="@+id/itemCommentHeading"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        style="@style/Comment_Item_Heading"
-        tools:text="spencerottarson • 1 hour ago"
-        />
 
-    <com.ottarson.hackerreader.ui.shared.ClickableTextView
-        android:id="@+id/itemCommentBody"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/Comment_Item_Body"
-        tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"
-        />
+        android:orientation="horizontal"
+        >
+
+        <View
+            android:id="@+id/itemCommentDepthColor"
+            android:layout_width="3dp"
+            android:layout_height="match_parent"
+            android:background="@color/linkColorDarkMode"
+            android:layout_marginEnd="6dp"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/itemCommentHeading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:layout_marginBottom="4dp"
+                style="@style/Comment_Item_Heading"
+                tools:text="spencerottarson • 1 hour ago"
+                />
+
+            <com.ottarson.hackerreader.ui.shared.ClickableTextView
+                android:id="@+id/itemCommentBody"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Comment_Item_Body"
+                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </com.ottarson.hackerreader.ui.shared.NoFocusableLinearLayout>

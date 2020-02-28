@@ -13,4 +13,20 @@
     <color name="linkColor">#0000FF</color>
     <color name="linkColorDarkMode">#14E4FF</color>
 
+    <color name="colorDepth1">#FF0000</color>
+    <color name="colorDepth2">#00FF00</color>
+    <color name="colorDepth3">#FF00FF</color>
+    <color name="colorDepth4">#00FFFF</color>
+    <color name="colorDepth5">#FFFF00</color>
+    <color name="colorDepth6">#0000FF</color>
+
+    <array name="depthColors">
+        <item>@color/colorDepth1</item>
+        <item>@color/colorDepth2</item>
+        <item>@color/colorDepth3</item>
+        <item>@color/colorDepth4</item>
+        <item>@color/colorDepth5</item>
+        <item>@color/colorDepth6</item>
+    </array>
+
 </resources>
