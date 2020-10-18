@@ -12,7 +12,7 @@ import com.ottarson.hackerreader.utils.addTime
 import dagger.Component
 import dagger.Module
 import dagger.Provides
-import io.reactivex.Observable
+import io.reactivex.rxjava3.Observable
 import java.util.Calendar
 import java.util.Date
 import javax.inject.Singleton

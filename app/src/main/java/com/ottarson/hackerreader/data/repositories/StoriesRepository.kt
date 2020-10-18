@@ -1,7 +1,7 @@
 package com.ottarson.hackerreader.data.repositories
 
 import com.ottarson.hackerreader.data.models.Story
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 
 interface StoriesRepository {
     fun getTopStories(

@@ -2,7 +2,7 @@ package com.ottarson.hackerreader.data.repositories
 
 import com.ottarson.hackerreader.data.models.Story
 import com.ottarson.hackerreader.data.network.StoriesService
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 import javax.inject.Inject
 import kotlin.math.min
 
