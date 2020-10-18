@@ -1,7 +1,7 @@
 package com.ottarson.hackerreader.data.network
 
 import com.ottarson.hackerreader.data.models.Comment
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 import retrofit2.http.GET
 import retrofit2.http.Path
 

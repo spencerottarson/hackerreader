@@ -6,7 +6,7 @@ import com.ottarson.hackerreader.utils.addTime
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import io.reactivex.Observable
+import io.reactivex.rxjava3.Observable
 import java.util.Calendar
 import java.util.Date
 import org.junit.Before

@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
-apply plugin: 'kotlin-kapt'
-
 apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    compileSdkVersion 30
+    buildToolsVersion "30.0.2"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -18,7 +18,7 @@ android {
     defaultConfig {
         applicationId "com.ottarson.hackerreader"
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "com.ottarson.hackerreader.MockTestRunner"
@@ -42,7 +42,7 @@ dependencies {
     implementation 'androidx.browser:browser:1.2.0'
     implementation 'com.google.android.material:material:1.0.0'
 
-    def appCompatVersion = "1.1.0"
+    def appCompatVersion = "1.2.0"
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
 
     def legacySupportVersion = "1.0.0"
@@ -53,11 +53,11 @@ dependencies {
     implementation "androidx.cardview:cardview:$cardViewVersion"
 
     // Constraint Layout
-    def constraintLayoutVersion = "1.1.3"
+    def constraintLayoutVersion = "2.0.2"
     implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
 
     // Dagger
-    def daggerVersion = "2.25.2"
+    def daggerVersion = "2.28.3"
     implementation "com.google.dagger:dagger:$daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
     implementation "com.google.dagger:dagger-android-support:$daggerVersion"
@@ -70,19 +70,19 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
 
     // Navigation Components
-    def navigationVersion = "2.2.1"
+    def navigationVersion = "2.3.0"
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
 
     // RxJava
-    def rxJavaVersion = "2.1.1"
-    implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
-    implementation "io.reactivex.rxjava2:rxandroid:$rxJavaVersion"
+    def rxJavaVersion = "3.0.6"
+    implementation "io.reactivex.rxjava3:rxjava:$rxJavaVersion"
+    implementation "io.reactivex.rxjava3:rxandroid:3.0.0"
 
     // Retrofit
-    def retrofitVersion = "2.6.2"
+    def retrofitVersion = "2.9.0"
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava3:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
     implementation 'com.squareup.okhttp3:logging-interceptor:4.2.2'
 
@@ -95,23 +95,23 @@ dependencies {
     implementation "com.google.code.gson:gson:$gsonVersion"
 
     // Testing
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13'
     testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
-    testImplementation "io.mockk:mockk:1.9.3"
+    testImplementation "io.mockk:mockk:1.10.0"
     //noinspection GradleDependency
     testImplementation "org.robolectric:robolectric:4.3"
 
-    implementation "androidx.fragment:fragment:1.2.1"
-    debugImplementation('androidx.fragment:fragment-testing:1.1.0') {
+    implementation "androidx.fragment:fragment:1.2.5"
+    debugImplementation('androidx.fragment:fragment-testing:1.2.5') {
         // exclude androidx.test:core while fragment_testing depends on 1.1.0
         exclude group: 'androidx.test', module: 'core'
     }
-    debugImplementation 'androidx.test:core-ktx:1.2.0'
+    debugImplementation 'androidx.test:core-ktx:1.3.0'
     androidTestImplementation "io.mockk:mockk-android:1.9.3"
-    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.2.0'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test:rules:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.3.0'
+    androidTestImplementation 'androidx.test:runner:1.3.0'
+    androidTestImplementation 'androidx.test:rules:1.3.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     androidTestImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
 }
 
