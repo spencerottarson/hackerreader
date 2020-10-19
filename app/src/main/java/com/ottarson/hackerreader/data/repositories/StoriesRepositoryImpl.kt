@@ -17,14 +17,14 @@ class StoriesRepositoryImpl @Inject constructor(
         forceRefresh: Boolean
     ): Observable<Story> {
 
-        return getStoryIds(forceRefresh).flatMap { ids ->
+        return getStoryIds(forceRefresh).concatMapEager { ids ->
             if (startIndex in 0..ids.count()) {
                 Observable.fromIterable(
                     ids.subList(
                         startIndex,
                         min(startIndex + count, ids.count())
                     )
-                ).flatMap { id ->
+                ).concatMapEager { id ->
                     storiesService.getStory(id)
                 }
             } else {
