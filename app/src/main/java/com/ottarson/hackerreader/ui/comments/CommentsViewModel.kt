@@ -59,14 +59,12 @@ class CommentsViewModel(
                     allComments.add(commentViewObject)
                     liveDataComments.value = allComments.filter { !it.hidden }.toMutableList()
                 }
-                Log.i(javaClass.simpleName, comment.text ?: "No comment")
             }, { error ->
                 Log.e(javaClass.simpleName, "Error retrieving comments", error)
             })
     }
 
     fun toggleComment(id: Int) {
-//        commentMap[id]?.collapsed = commentMap[id]?.collapsed?.not() ?: false
         toggleCommentChildren(commentMap[id]?.childIds)
 
         liveDataComments.value = allComments.filter { !it.hidden }.toMutableList()
@@ -79,5 +77,19 @@ class CommentsViewModel(
                 toggleCommentChildren(commentMap[id]?.childIds)
             }
         }
+    }
+
+    fun getNextTopLevelCommentPosition(firstVisiblePosition: Int): Int {
+        return liveDataComments.value?.let {
+            it.takeLast(
+                it.count() - (firstVisiblePosition + 1)
+            ).indexOfFirst { it.depth == 0 } + firstVisiblePosition
+        } ?: firstVisiblePosition
+    }
+
+    fun getPreviousTopLevelCommentPosition(firstVisiblePosition: Int): Int {
+        return liveDataComments.value?.let {
+            it.take(firstVisiblePosition).indexOfLast { it.depth == 0 }
+        } ?: 0
     }
 }

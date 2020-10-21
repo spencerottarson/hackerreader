@@ -2,4 +2,6 @@
     <string name="app_name">Hacker Reader</string>
     <string name="comments">Comments</string>
     <string name="load_more">Load more</string>
+    <string name="previous_top_level_comment">Previous top level comment</string>
+    <string name="next_top_level_comment">Next top level comment</string>
 </resources>

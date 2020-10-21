@@ -13,6 +13,8 @@ import com.ottarson.hackerreader.ui.shared.ViewModelFactory
 import com.ottarson.hackerreader.utils.getInjector
 import javax.inject.Inject
 import kotlinx.android.synthetic.main.fragment_comments.commentListView
+import kotlinx.android.synthetic.main.fragment_comments.commentListViewNextButton
+import kotlinx.android.synthetic.main.fragment_comments.commentListViewPreviousButton
 
 class CommentsFragment : Fragment(), CommentInteractionDelegate {
 
@@ -52,6 +54,22 @@ class CommentsFragment : Fragment(), CommentInteractionDelegate {
         viewModel.getLiveDataStory().observe(viewLifecycleOwner, Observer { story ->
             (activity as? AppCompatActivity)?.supportActionBar?.title = story.title
         })
+
+        commentListViewNextButton.setOnClickListener {
+            commentListView.smoothScrollToPositionFromTop(
+                viewModel.getNextTopLevelCommentPosition(commentListView.firstVisiblePosition) + 1,
+                0,
+                800
+            )
+        }
+
+        commentListViewPreviousButton.setOnClickListener {
+            commentListView.smoothScrollToPositionFromTop(
+                viewModel.getPreviousTopLevelCommentPosition(commentListView.firstVisiblePosition),
+                0,
+                800
+            )
+        }
     }
 
     override fun onItemClicked(commentId: Int) {
