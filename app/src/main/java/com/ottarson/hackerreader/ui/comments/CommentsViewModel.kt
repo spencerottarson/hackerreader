@@ -53,7 +53,7 @@ class CommentsViewModel(
                     val commentViewObject = CommentViewObject(comment, parentDepth + 1)
                     commentViewObject.hidden =
                         commentMap[comment.parent]?.hidden == true ||
-                                commentMap[comment.parent]?.collapsed == true
+                                commentMap[comment.parent]?.viewState == ViewState.collapsed
 
                     commentMap[id] = commentViewObject
                     allComments.add(commentViewObject)
@@ -66,7 +66,7 @@ class CommentsViewModel(
     }
 
     fun toggleComment(id: Int) {
-        commentMap[id]?.collapsed = commentMap[id]?.collapsed?.not() ?: false
+//        commentMap[id]?.collapsed = commentMap[id]?.collapsed?.not() ?: false
         toggleCommentChildren(commentMap[id]?.childIds)
 
         liveDataComments.value = allComments.filter { !it.hidden }.toMutableList()
@@ -75,7 +75,7 @@ class CommentsViewModel(
     private fun toggleCommentChildren(ids: List<Int>?) {
         ids?.forEach { id ->
             commentMap[id]?.hidden = commentMap[id]?.hidden?.not() ?: false
-            if (commentMap[id]?.collapsed == false) {
+            if (commentMap[id]?.viewState == ViewState.expanded) {
                 toggleCommentChildren(commentMap[id]?.childIds)
             }
         }

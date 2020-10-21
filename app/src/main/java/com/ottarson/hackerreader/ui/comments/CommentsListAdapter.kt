@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.ottarson.hackerreader.R
+import com.ottarson.hackerreader.utils.collapse
 import com.ottarson.hackerreader.utils.dp
+import com.ottarson.hackerreader.utils.expand
 import com.ottarson.hackerreader.utils.setVisibleOrGone
 
 class CommentsListAdapter(
@@ -49,12 +51,33 @@ class CommentsListAdapter(
             8.dp(context)
         )
 
-        bodyView?.setVisibleOrGone(getItem(position)?.collapsed == false)
+        bodyView?.setVisibleOrGone(getItem(position)?.viewState != ViewState.collapsed)
+
+        bodyView?.visibility = if (getItem(position)?.viewState == ViewState.collapsed) {
+            bodyView?.layoutParams?.height = 0
+            View.GONE
+        } else if (getItem(position)?.viewState == ViewState.expanded) {
+            bodyView?.layoutParams?.height = ViewGroup.LayoutParams.WRAP_CONTENT
+            View.VISIBLE
+        } else {
+            View.VISIBLE
+        }
 
         containerView?.isClickable = true
 
-        view?.setOnClickListener {
+        containerView?.setOnClickListener {
             getItem(position)?.id?.let {
+                if (getItem(position)?.viewState == ViewState.expanded) {
+                    getItem(position)?.viewState = ViewState.collapsing
+                    bodyView?.collapse {
+                        getItem(position)?.viewState = ViewState.collapsed
+                    }
+                } else if (getItem(position)?.viewState == ViewState.collapsed) {
+                    getItem(position)?.viewState = ViewState.expanding
+                    bodyView?.expand {
+                        getItem(position)?.viewState = ViewState.expanded
+                    }
+                }
                 delegate?.onItemClicked(it)
             }
         }
