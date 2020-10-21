@@ -43,13 +43,13 @@ class CommentsFragment : Fragment(), CommentInteractionDelegate {
             viewModel.loadPage(id)
         }
 
-        viewModel.getLiveDataComment().observe(this, Observer { comments ->
+        viewModel.getLiveDataComment().observe(viewLifecycleOwner, Observer { comments ->
             adapter.clear()
             adapter.addAll(comments)
             adapter.notifyDataSetChanged()
         })
 
-        viewModel.getLiveDataStory().observe(this, Observer { story ->
+        viewModel.getLiveDataStory().observe(viewLifecycleOwner, Observer { story ->
             (activity as? AppCompatActivity)?.supportActionBar?.title = story.title
         })
     }
