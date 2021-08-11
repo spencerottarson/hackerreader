@@ -6,8 +6,8 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface StoriesService {
-    @GET("topstories.json")
-    fun getStories(): Observable<List<Int>>
+    @GET("{sort}")
+    fun getStories(@Path("sort") sort: String): Observable<List<Int>>
 
     @GET("item/{id}.json")
     fun getStory(@Path("id") id: Int): Observable<Story>

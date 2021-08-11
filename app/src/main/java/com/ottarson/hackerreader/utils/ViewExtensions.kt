@@ -1,6 +1,7 @@
 package com.ottarson.hackerreader.utils
 
 import android.content.Context
+import android.content.res.Configuration
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.Transformation
@@ -86,4 +87,9 @@ fun View.collapse(onComplete: (() -> Unit)? = null) {
     animation.duration =
         (initialHeight / this.context.resources.displayMetrics.density).toLong()
     this.startAnimation(animation)
+}
+
+fun Context.inDarkMode(): Boolean {
+    return this.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK) ==
+            Configuration.UI_MODE_NIGHT_YES
 }

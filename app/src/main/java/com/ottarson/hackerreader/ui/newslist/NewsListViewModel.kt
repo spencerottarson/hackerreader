@@ -19,8 +19,10 @@ class NewsListViewModel(
     private var disposable: Disposable? = null
     private var countLoaded = 0
 
+    var sortOption: SortOption = SortOption.Top
+
     init {
-        loadPage(false)
+        loadPage(sortOption, false)
     }
 
     fun getLiveData(): LiveData<MutableList<StoryViewObject>> {
@@ -36,15 +38,26 @@ class NewsListViewModel(
         disposable?.dispose()
     }
 
-    fun loadPage(forceRefresh: Boolean = true) {
+    fun refresh() {
+        loadPage(sortOption, true)
+    }
+
+    fun loadPage(sort: SortOption = SortOption.Top, forceRefresh: Boolean = true) {
         liveData.value = mutableListOf()
         countLoaded = 0
-        loadMore(forceRefresh)
+        val needsForceRefresh = forceRefresh || this.sortOption != sort
+        this.sortOption = sort
+        loadMore(needsForceRefresh)
     }
 
     fun loadMore(forceRefresh: Boolean = false) {
         liveDataLoadMore.value = false
-        disposable = storiesRepository.getTopStories(countLoaded, 20, forceRefresh)
+        disposable = storiesRepository.getTopStories(
+            countLoaded,
+            20,
+            sortOption.apiEndpoint,
+            forceRefresh
+        )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ story ->
