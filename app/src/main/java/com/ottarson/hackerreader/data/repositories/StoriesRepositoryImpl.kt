@@ -14,10 +14,11 @@ class StoriesRepositoryImpl @Inject constructor(
     override fun getTopStories(
         startIndex: Int,
         count: Int,
+        sort: String,
         forceRefresh: Boolean
     ): Observable<Story> {
 
-        return getStoryIds(forceRefresh).concatMapEager { ids ->
+        return getStoryIds(sort, forceRefresh).concatMapEager { ids ->
             if (startIndex in 0..ids.count()) {
                 Observable.fromIterable(
                     ids.subList(
@@ -37,9 +38,9 @@ class StoriesRepositoryImpl @Inject constructor(
         return storiesService.getStory(id)
     }
 
-    private fun getStoryIds(forceRefresh: Boolean = false): Observable<List<Int>> {
+    private fun getStoryIds(sort: String, forceRefresh: Boolean = false): Observable<List<Int>> {
         return if (forceRefresh || storyIds.isNullOrEmpty()) {
-            storiesService.getStories().doOnNext { storyIds = it }
+            storiesService.getStories(sort).doOnNext { storyIds = it }
         } else {
             Observable.just(storyIds)
         }

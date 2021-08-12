@@ -7,6 +7,7 @@ interface StoriesRepository {
     fun getTopStories(
         startIndex: Int = 0,
         count: Int = 20,
+        sort: String = "top",
         forceRefresh: Boolean = false
     ): Observable<Story>
 
