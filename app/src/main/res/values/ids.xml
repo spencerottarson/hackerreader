@@ -3,4 +3,7 @@
     <item name="menu_sort_option_top" type="id"/>
     <item name="menu_sort_option_new" type="id"/>
     <item name="menu_sort_option_best" type="id"/>
+    <item name="menu_sort_option_ask" type="id" />
+    <item name="menu_sort_option_show" type="id" />
+    <item name="menu_sort_option_job" type="id" />
 </resources>

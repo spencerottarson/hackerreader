@@ -9,5 +9,6 @@ data class Story(
     val time: Long?,
     val title: String?,
     val type: String?,
-    val url: String?
+    val url: String?,
+    val text: String?
 )

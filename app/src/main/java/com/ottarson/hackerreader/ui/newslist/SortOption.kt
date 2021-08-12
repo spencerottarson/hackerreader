@@ -10,5 +10,8 @@ enum class SortOption(
 ) {
     Top(R.id.menu_sort_option_top, "Top", "topstories.json", 0),
     New(R.id.menu_sort_option_new, "New", "newstories.json", 1),
-    Best(R.id.menu_sort_option_best, "Best", "beststories.json", 2)
+    Best(R.id.menu_sort_option_best, "Best", "beststories.json", 2),
+    Ask(R.id.menu_sort_option_ask, "Ask", "askstories.json", 3),
+    Show(R.id.menu_sort_option_show, "Show", "showstories.json", 4),
+    Job(R.id.menu_sort_option_job, "Job", "jobstories.json", 5)
 }

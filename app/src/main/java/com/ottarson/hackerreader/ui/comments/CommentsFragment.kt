@@ -24,6 +24,8 @@ class CommentsFragment : Fragment(), CommentInteractionDelegate {
 
     private lateinit var adapter: CommentsListAdapter
 
+    private var headerView: HeaderView? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -53,11 +55,16 @@ class CommentsFragment : Fragment(), CommentInteractionDelegate {
 
         viewModel.getLiveDataStory().observe(viewLifecycleOwner, Observer { story ->
             (activity as? AppCompatActivity)?.supportActionBar?.title = story.title
+
+            story.text?.let {
+                headerView = HeaderView(requireContext(), text = it)
+                commentListView.addHeaderView(headerView)
+            }
         })
 
         commentListViewNextButton.setOnClickListener {
             commentListView.smoothScrollToPositionFromTop(
-                viewModel.getNextTopLevelCommentPosition(commentListView.firstVisiblePosition) + 1,
+                viewModel.getNextTopLevelCommentPosition(commentListView.firstVisiblePosition + commentListView.headerViewsCount) + 1 + commentListView.headerViewsCount,
                 0,
                 800
             )
@@ -65,7 +72,7 @@ class CommentsFragment : Fragment(), CommentInteractionDelegate {
 
         commentListViewPreviousButton.setOnClickListener {
             commentListView.smoothScrollToPositionFromTop(
-                viewModel.getPreviousTopLevelCommentPosition(commentListView.firstVisiblePosition),
+                viewModel.getPreviousTopLevelCommentPosition(commentListView.firstVisiblePosition - commentListView.headerViewsCount) + commentListView.headerViewsCount,
                 0,
                 800
             )
