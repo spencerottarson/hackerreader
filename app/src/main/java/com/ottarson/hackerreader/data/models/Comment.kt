@@ -7,5 +7,6 @@ data class Comment(
     val parent: Int?,
     val text: String?,
     val time: Long?,
-    val type: String?
+    val type: String?,
+    val deleted: Boolean? = false
 )

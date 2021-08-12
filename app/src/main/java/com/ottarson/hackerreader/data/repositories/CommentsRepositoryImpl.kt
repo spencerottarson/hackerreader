@@ -16,10 +16,14 @@ class CommentsRepositoryImpl @Inject constructor(
 
         return Observable.fromIterable(ids).concatMapEager { id: Int ->
             commentsService.getComment(id).concatMapEager { comment ->
-                Observable.concat(
-                    Observable.just(comment),
-                    getComments(comment.kids ?: arrayListOf())
-                )
+                if (comment.deleted != true) {
+                    Observable.concat(
+                        Observable.just(comment),
+                        getComments(comment.kids ?: arrayListOf())
+                    )
+                } else {
+                    Observable.empty()
+                }
             }
         }
     }
